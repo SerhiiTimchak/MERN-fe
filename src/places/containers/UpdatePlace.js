@@ -36,7 +36,7 @@ const UpdatePlace = () => {
         const responseData = await sendRequest(
           `http://localhost:5000/api/places/${placeId}`
         );
-        setLoadedPlace(responseData);
+        setLoadedPlace(responseData.place);
         setFormData(
           {
             title: {
@@ -67,6 +67,7 @@ const UpdatePlace = () => {
         }),
         {
           "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
         }
       );
       history.push("/" + auth.userId + "/places");
@@ -104,8 +105,8 @@ const UpdatePlace = () => {
             validators={[VALIDATOR_REQUIRE()]}
             errorText="Pleace enter a valid title."
             onInput={inputHandler}
-            initialValue={formState.inputs.title.value}
-            initialValid={formState.inputs.title.isValid}
+            initialValue={loadedPlace.title}
+            initialValid={true}
           />
           <Input
             id="description"
@@ -114,8 +115,8 @@ const UpdatePlace = () => {
             validators={[VALIDATOR_MINLENGTH(5)]}
             errorText="Pleace enter a valid description (min. 5 characters)."
             onInput={inputHandler}
-            initialValue={formState.inputs.title.value}
-            initialValid={formState.inputs.title.isValid}
+            initialValue={loadedPlace.description}
+            initialValid={true}
           />
           <Button type="submit" disabled={!formState.isValid}>
             UPDATE PLACE

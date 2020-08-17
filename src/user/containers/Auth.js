@@ -73,7 +73,7 @@ const Auth = () => {
           }
         );
 
-        auth.login(responceData.user.id);
+        auth.login(responceData.userId, responceData.token);
       } catch (error) {}
     } else {
       try {
@@ -87,7 +87,7 @@ const Auth = () => {
           "POST",
           formData
         );
-        auth.login(responceData.user.id);
+        auth.login(responceData.userId, responceData.token);
       } catch (error) {}
     }
   };
