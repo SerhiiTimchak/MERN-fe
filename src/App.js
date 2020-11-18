@@ -1,18 +1,18 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Route,
   Redirect,
   Switch,
-} from "react-router-dom";
+} from 'react-router-dom';
 
-import Users from "./user/containers/Users";
-import NewPlace from "./places/containers/NewPlace";
-import MainNavigation from "./shared/components/Navigation/MainNavigation";
-import UserPlaces from "./places/containers/UserPlaces";
-import UpdatePlace from "./places/containers/UpdatePlace";
-import Auth from "./user/containers/Auth";
-import { AuthContext } from "./shared/context/auth-context";
+import Users from './user/containers/Users';
+import NewPlace from './places/containers/NewPlace';
+import MainNavigation from './shared/components/Navigation/MainNavigation';
+import UserPlaces from './places/containers/UserPlaces';
+import UpdatePlace from './places/containers/UpdatePlace';
+import Auth from './user/containers/Auth';
+import { AuthContext } from './shared/context/auth-context';
 
 const App = () => {
   const [token, setToken] = useState(false);
@@ -26,6 +26,10 @@ const App = () => {
   const logout = useCallback(() => {
     setToken(false);
     setUserId(null);
+    localStorage.setItem(
+      'userData',
+      JSON.stringify({ userId: uid, token: token })
+    );
   }, []);
 
   let routes;
