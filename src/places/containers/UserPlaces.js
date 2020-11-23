@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 
-import { useParams } from "react-router-dom";
-import PlaceList from "../components/PlaceList";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import LoadingSpinner from "../../shared/components/UIelements/Modal/LoadingSpinner";
-import ErrorModal from "../../shared/components/UIelements/ErrorModal/ErrorModal";
+import { useParams } from 'react-router-dom';
+import PlaceList from '../components/PlaceList';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import LoadingSpinner from '../../shared/components/UIelements/Modal/LoadingSpinner';
+import ErrorModal from '../../shared/components/UIelements/ErrorModal/ErrorModal';
 
 const UserPlaces = (props) => {
   const [loadedPlaces, setLoadedPlaces] = useState();
@@ -16,7 +16,7 @@ const UserPlaces = (props) => {
     const fetchPlaces = async () => {
       try {
         const responseData = await sendRequest(
-          `http://localhost:5000/api/places/user/${userId}`
+          `${process.env.REACT_APP_BACKEND_URL}/places/user/${userId}`
         );
         setLoadedPlaces(responseData.places);
       } catch (error) {}

@@ -1,14 +1,14 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import { AuthContext } from "../../shared/context/auth-context";
-import Card from "../../shared/components/UIelements/Card/Card";
-import Button from "../../shared/components/FormElements/Button/Button";
-import Modal from "../../shared/components/UIelements/Modal/Modal";
-import ErrorModal from "../../shared/components/UIelements/ErrorModal/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIelements/Modal/LoadingSpinner";
-import Map from "../../shared/components/UIelements/Map/Map";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import "./PlaceItem.css";
+import { AuthContext } from '../../shared/context/auth-context';
+import Card from '../../shared/components/UIelements/Card/Card';
+import Button from '../../shared/components/FormElements/Button/Button';
+import Modal from '../../shared/components/UIelements/Modal/Modal';
+import ErrorModal from '../../shared/components/UIelements/ErrorModal/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIelements/Modal/LoadingSpinner';
+import Map from '../../shared/components/UIelements/Map/Map';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import './PlaceItem.css';
 
 const PlaceItem = (props) => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
@@ -28,11 +28,11 @@ const PlaceItem = (props) => {
     setShowConfirmModal(false);
     try {
       await sendRequest(
-        `http://localhost:5000/api/places/${props.id}`,
-        "DELETE",
+        `${process.env.REACT_APP_BACKEND_URL}/places/${props.id}`,
+        'DELETE',
         null,
         {
-          Authorization: "Bearer " + auth.token,
+          Authorization: 'Bearer ' + auth.token,
         }
       );
       props.onDelete(props.id);
@@ -84,7 +84,7 @@ const PlaceItem = (props) => {
           {isLoading && <LoadingSpinner asOverlay />}
           <div className="place-item__image">
             <img
-              src={`http://localhost:5000/${props.image}`}
+              src={`${process.env.REACT_APP_ASSET_URL}/${props.image}`}
               alt={props.title}
             />
           </div>

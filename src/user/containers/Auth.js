@@ -1,20 +1,20 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext } from 'react';
 
-import Input from "../../shared/components/FormElements/Input/Input";
-import Button from "../../shared/components/FormElements/Button/Button";
+import Input from '../../shared/components/FormElements/Input/Input';
+import Button from '../../shared/components/FormElements/Button/Button';
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
-} from "../../shared/util/validators";
-import Card from "../../shared/components/UIelements/Card/Card";
-import { useForm } from "../../shared/hooks/form-hook";
-import { useHttpClient } from "../../shared/hooks/http-hook";
-import { AuthContext } from "../../shared/context/auth-context";
-import ErrorModal from "../../shared/components/UIelements/ErrorModal/ErrorModal";
-import LoadingSpinner from "../../shared/components/UIelements/Modal/LoadingSpinner";
-import ImageUpload from "../../shared/components/FormElements/ImageUpload/ImageUpload";
-import "./Auth.css";
+} from '../../shared/util/validators';
+import Card from '../../shared/components/UIelements/Card/Card';
+import { useForm } from '../../shared/hooks/form-hook';
+import { useHttpClient } from '../../shared/hooks/http-hook';
+import { AuthContext } from '../../shared/context/auth-context';
+import ErrorModal from '../../shared/components/UIelements/ErrorModal/ErrorModal';
+import LoadingSpinner from '../../shared/components/UIelements/Modal/LoadingSpinner';
+import ImageUpload from '../../shared/components/FormElements/ImageUpload/ImageUpload';
+import './Auth.css';
 
 const Auth = () => {
   const auth = useContext(AuthContext);
@@ -24,11 +24,11 @@ const Auth = () => {
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
-        value: "",
+        value: '',
         isValid: false,
       },
       password: {
-        value: "",
+        value: '',
         isValid: false,
       },
     },
@@ -46,7 +46,7 @@ const Auth = () => {
       setFormData(
         {
           ...formState.inputs,
-          name: { value: "", isValid: false },
+          name: { value: '', isValid: false },
           image: { value: null, isValid: false },
         },
         false
@@ -55,21 +55,19 @@ const Auth = () => {
   };
 
   const authSubmitHandler = async (event) => {
-    console.log(formState.inputs);
-
     event.preventDefault();
 
     if (isLoginMode) {
       try {
         const responceData = await sendRequest(
-          "http://localhost:5000/api/users/login",
-          "POST",
+          `${process.env.REACT_APP_BACKEND_URL}/users/login`,
+          'POST',
           JSON.stringify({
             email: formState.inputs.email.value,
             password: formState.inputs.password.value,
           }),
           {
-            "Content-Type": "application/json",
+            'Content-Type': 'application/json',
           }
         );
 
@@ -78,13 +76,13 @@ const Auth = () => {
     } else {
       try {
         const formData = new FormData();
-        formData.append("email", formState.inputs.email.value);
-        formData.append("name", formState.inputs.name.value);
-        formData.append("password", formState.inputs.password.value);
-        formData.append("image", formState.inputs.image.value);
+        formData.append('email', formState.inputs.email.value);
+        formData.append('name', formState.inputs.name.value);
+        formData.append('password', formState.inputs.password.value);
+        formData.append('image', formState.inputs.image.value);
         const responceData = await sendRequest(
-          "http://localhost:5000/api/users/signup",
-          "POST",
+          `${process.env.REACT_APP_BACKEND_URL}/users/signup`,
+          'POST',
           formData
         );
         auth.login(responceData.userId, responceData.token);
@@ -116,7 +114,7 @@ const Auth = () => {
               center
               id="image"
               onInput={inputHandler}
-              errorText={"Please provide and Image"}
+              errorText={'Please provide and Image'}
             />
           )}
           <Input
@@ -138,11 +136,11 @@ const Auth = () => {
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            {isLoginMode ? "LOGIN" : "SIGNUP"}
+            {isLoginMode ? 'LOGIN' : 'SIGNUP'}
           </Button>
         </form>
         <Button inverse onClick={switchModeHandler}>
-          SWITCH TO {isLoginMode ? "SIGNUP" : "LOGIN"}
+          SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}
         </Button>
       </Card>
     </React.Fragment>
